@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     int[] gameState={3,3,3,3,3,3,3,3,3};
     int[][] winningPositions={{1,2,3},{4,5,6},{7,8,9},{1,4,7},{2,5,8},{3,6,9},{1,5,9},{3,5,7}};
+    boolean isEnd;
 
 
     public boolean CheckWinningPositions(int P)
@@ -54,31 +55,29 @@ public class MainActivity extends AppCompatActivity {
 
         int tappedImage=Integer.parseInt(imageView.getTag().toString());
 
-        gameState[tappedImage-1]=player;
+        if(gameState[tappedImage-1]==3 && !isEnd) {
 
-        if(player==1)
-        {
-            imageView.setImageResource(R.drawable.red);
-           if(CheckWinningPositions(player))
-           {
-               //Toast.makeText(this,player+" has won")
-               Log.i("JITSE NAKI?",player+" has won");
-
+            gameState[tappedImage - 1] = player;
+            if (player == 1) {
+                imageView.setImageResource(R.drawable.red);
+                if (CheckWinningPositions(player)) {
+                    Log.i("JITSE NAKI?", player + " has won");
+                    isEnd=true;
 
 
-           }
-            player=2;
-        }
-        else
-        {
-            imageView.setImageResource(R.drawable.yellow);
-            if(CheckWinningPositions(player))
-            {
-                Log.i("JITSE NAKI?",player+" has won");
-               return;
+                }
+                player = 2;
             }
+            else {
+                imageView.setImageResource(R.drawable.yellow);
+                if (CheckWinningPositions(player)) {
+                    Log.i("JITSE NAKI?", player + " has won");
+                    isEnd=true;
 
-            player=1;
+                }
+
+                player = 1;
+            }
         }
 
 
@@ -88,5 +87,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         player=1;
+        isEnd=false;
     }
 }
