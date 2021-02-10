@@ -2,10 +2,12 @@ package com.example.gameconnect3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.GridLayout;
+import android.widget.Button;
+import androidx.gridlayout.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -18,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
     int[] gameState={3,3,3,3,3,3,3,3,3};
     int[][] winningPositions={{1,2,3},{4,5,6},{7,8,9},{1,4,7},{2,5,8},{3,6,9},{1,5,9},{3,5,7}};
     boolean isEnd;
-
+    Button playAgainButton;
+    GridLayout gridLayout;
 
     public boolean CheckWinningPositions(int P)
     {
@@ -51,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void play(View view)
     {
+
         ImageView imageView=(ImageView) view;
+         playAgainButton=(Button) findViewById(R.id.button);
+         gridLayout=(GridLayout) findViewById(R.id.grid);
 
         int tappedImage=Integer.parseInt(imageView.getTag().toString());
 
@@ -63,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
                 if (CheckWinningPositions(player)) {
                     Log.i("JITSE NAKI?", player + " has won");
                     isEnd=true;
+                    playAgainButton.setVisibility(View.VISIBLE);
+
+
 
 
                 }
@@ -73,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 if (CheckWinningPositions(player)) {
                     Log.i("JITSE NAKI?", player + " has won");
                     isEnd=true;
+                    playAgainButton.setVisibility(View.VISIBLE);
 
                 }
 
@@ -80,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+
+    }
+
+    public void PlayAgain(View view)
+    {
+        playAgainButton.setVisibility(View.INVISIBLE);
+        isEnd=false;
+        gameState= new int[]{3, 3, 3, 3, 3, 3, 3, 3, 3};
+          for(int i=0;i<gridLayout.getChildCount();i++)
+          {
+              ImageView imageView=(ImageView) gridLayout.getChildAt(i);
+              imageView.setImageDrawable(null);
+          }
 
     }
     @Override
